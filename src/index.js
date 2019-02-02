@@ -4,6 +4,7 @@ import forEach from 'mout/array/forEach';
 import forOwn from 'mout/object/forOwn';
 import keys from 'mout/object/keys';
 import isFunction from 'mout/lang/isFunction';
+import isAsyncFunction from 'mout/lang/isAsyncFunction';
 import isObject from 'mout/lang/isObject';
 import Promise from 'promise-polyfill';
 import riot from 'riot';
@@ -138,7 +139,7 @@ class Store {
 
     // Load plugins.
     forEach(this._plugins, p => {
-      if (!isFunction(p)) {
+      if ((!isFunction(p)) || (!isAsyncFunction(p))) {
         error('[plugin] The plugin is not a function.');
       }
       p.apply(null, [this]);
@@ -175,7 +176,7 @@ class Store {
       state: this._state
     };
     const fn = this._getters[name];
-    if (!fn || !isFunction(fn)) {
+    if (!fn || !isFunction(fn) || !isAsyncFunction(fn)) {
       error(`[getter]', 'The getter is not a function. name=${name} data=${data}`);
     }
     debug('[getter]', name, data);
@@ -201,7 +202,7 @@ class Store {
     };
 
     const fn = this._mutations[name];
-    if (!fn || !isFunction(fn)) {
+    if (!fn || !isFunction(fn) || !isAsyncFunction(fn)) {
       error(`[mutation]', 'The mutation is not a function. name=${name} data=${data}`);
     }
 
@@ -241,7 +242,7 @@ class Store {
     };
 
     const fn = this._actions[name];
-    if (!fn || !isFunction(fn)) {
+    if (!fn || !isFunction(fn) || !isAsyncFunction(fn)) {
       error(`[action] The action is not a function. name=${name} data=${data}`);
     }
 

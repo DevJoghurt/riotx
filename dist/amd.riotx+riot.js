@@ -1,7 +1,9 @@
-/* riotx version 2.0.1, riot version ^3.9.0 */
-define(function () { 'use strict';
+/* riotx version 2.0.2, riot version ^3.9.0 */
+define(['mout/lang/isAsyncFunction'], function (isAsyncFunction) { 'use strict';
 
-    var VERSION = "2.0.1";
+    var VERSION = "2.0.2";
+
+    isAsyncFunction = isAsyncFunction && isAsyncFunction.hasOwnProperty('default') ? isAsyncFunction['default'] : isAsyncFunction;
 
     /**
          * Array forEach
@@ -3549,7 +3551,7 @@ define(function () { 'use strict';
 
       // Load plugins.
       forEach_1(this._plugins, function (p) {
-        if (!isFunction_1(p)) {
+        if ((!isFunction_1(p)) || (!isAsyncFunction(p))) {
           error('[plugin] The plugin is not a function.');
         }
         p.apply(null, [this$1]);
@@ -3586,7 +3588,7 @@ define(function () { 'use strict';
         state: this._state
       };
       var fn = this._getters[name];
-      if (!fn || !isFunction_1(fn)) {
+      if (!fn || !isFunction_1(fn) || !isAsyncFunction(fn)) {
         error(("[getter]', 'The getter is not a function. name=" + name + " data=" + data));
       }
       debug('[getter]', name, data);
@@ -3614,7 +3616,7 @@ define(function () { 'use strict';
       };
 
       var fn = this._mutations[name];
-      if (!fn || !isFunction_1(fn)) {
+      if (!fn || !isFunction_1(fn) || !isAsyncFunction(fn)) {
         error(("[mutation]', 'The mutation is not a function. name=" + name + " data=" + data));
       }
 
@@ -3656,7 +3658,7 @@ define(function () { 'use strict';
       };
 
       var fn = this._actions[name];
-      if (!fn || !isFunction_1(fn)) {
+      if (!fn || !isFunction_1(fn) || !isAsyncFunction(fn)) {
         error(("[action] The action is not a function. name=" + name + " data=" + data));
       }
 
