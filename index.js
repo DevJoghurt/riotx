@@ -539,7 +539,11 @@ var Store = function Store(_store) {
 
   // Load plugins.
   forEach_1(this._plugins, function (p) {
-    if ((!isFunction_1(p)) || (!isKind_1(p, 'AsyncFunction'))) {
+    var isFunctionBool = false;
+    if (isKind_1(p, 'AsyncFunction') || isFunction_1(p)) {
+      isFunctionBool = true;
+    }
+    if (!isFunctionBool) {
       error('[plugin] The plugin is not a function.');
     }
     p.apply(null, [this$1]);
@@ -576,7 +580,11 @@ Store.prototype.getter = function getter (name, data) {
     state: this._state
   };
   var fn = this._getters[name];
-  if (!fn || !isFunction_1(fn) || !isKind_1(fn, 'AsyncFunction')) {
+  var isFunctionBool = false;
+  if (isKind_1(fn, 'AsyncFunction') || isFunction_1(fn)) {
+    isFunctionBool = true;
+  }
+  if (!fn || !isFunctionBool) {
     error(("[getter]', 'The getter is not a function. name=" + name + " data=" + data));
   }
   debug('[getter]', name, data);
@@ -604,7 +612,11 @@ Store.prototype.commit = function commit (name, data) {
   };
 
   var fn = this._mutations[name];
-  if (!fn || !isFunction_1(fn) || !isKind_1(fn, 'AsyncFunction')) {
+  var isFunctionBool = false;
+  if (isKind_1(fn, 'AsyncFunction') || isFunction_1(fn)) {
+    isFunctionBool = true;
+  }
+  if (!fn || !isFunctionBool) {
     error(("[mutation]', 'The mutation is not a function. name=" + name + " data=" + data));
   }
 
@@ -646,7 +658,11 @@ Store.prototype.action = function action (name, data) {
   };
 
   var fn = this._actions[name];
-  if (!fn || !isFunction_1(fn) || !isKind_1(fn, 'AsyncFunction')) {
+  var isFunctionBool = false;
+  if (isKind_1(fn, 'AsyncFunction') || isFunction_1(fn)) {
+    isFunctionBool = true;
+  }
+  if (!fn || !isFunctionBool) {
     error(("[action] The action is not a function. name=" + name + " data=" + data));
   }
 

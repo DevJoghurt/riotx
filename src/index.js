@@ -139,7 +139,11 @@ class Store {
 
     // Load plugins.
     forEach(this._plugins, p => {
-      if ((!isFunction(p)) || (!isKind(p, 'AsyncFunction'))) {
+      let isFunctionBool = false;
+      if (isKind(p, 'AsyncFunction') || isFunction(p)) {
+        isFunctionBool = true;
+      }
+      if (!isFunctionBool) {
         error('[plugin] The plugin is not a function.');
       }
       p.apply(null, [this]);
@@ -176,7 +180,11 @@ class Store {
       state: this._state
     };
     const fn = this._getters[name];
-    if (!fn || !isFunction(fn) || !isKind(fn, 'AsyncFunction')) {
+    let isFunctionBool = false;
+    if (isKind(fn, 'AsyncFunction') || isFunction(fn)) {
+      isFunctionBool = true;
+    }
+    if (!fn || !isFunctionBool) {
       error(`[getter]', 'The getter is not a function. name=${name} data=${data}`);
     }
     debug('[getter]', name, data);
@@ -202,7 +210,11 @@ class Store {
     };
 
     const fn = this._mutations[name];
-    if (!fn || !isFunction(fn) || !isKind(fn, 'AsyncFunction')) {
+    let isFunctionBool = false;
+    if (isKind(fn, 'AsyncFunction') || isFunction(fn)) {
+      isFunctionBool = true;
+    }
+    if (!fn || !isFunctionBool) {
       error(`[mutation]', 'The mutation is not a function. name=${name} data=${data}`);
     }
 
@@ -242,7 +254,11 @@ class Store {
     };
 
     const fn = this._actions[name];
-    if (!fn || !isFunction(fn) || !isKind(fn, 'AsyncFunction')) {
+    let isFunctionBool = false;
+    if (isKind(fn, 'AsyncFunction') || isFunction(fn)) {
+      isFunctionBool = true;
+    }
+    if (!fn || !isFunctionBool) {
       error(`[action] The action is not a function. name=${name} data=${data}`);
     }
 
