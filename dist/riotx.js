@@ -1,10 +1,9 @@
 /* riotx version 2.0.2 */
-var riotx = (function (isAsyncFunction,riot) {
+var riotx = (function (riot) {
     'use strict';
 
     var VERSION = "2.0.2";
 
-    isAsyncFunction = isAsyncFunction && isAsyncFunction.hasOwnProperty('default') ? isAsyncFunction['default'] : isAsyncFunction;
     riot = riot && riot.hasOwnProperty('default') ? riot['default'] : riot;
 
     /**
@@ -539,7 +538,7 @@ var riotx = (function (isAsyncFunction,riot) {
 
       // Load plugins.
       forEach_1(this._plugins, function (p) {
-        if ((!isFunction_1(p)) || (!isAsyncFunction(p))) {
+        if ((!isFunction_1(p)) || (!isKind_1(p, 'AsyncFunction'))) {
           error('[plugin] The plugin is not a function.');
         }
         p.apply(null, [this$1]);
@@ -576,7 +575,7 @@ var riotx = (function (isAsyncFunction,riot) {
         state: this._state
       };
       var fn = this._getters[name];
-      if (!fn || !isFunction_1(fn) || !isAsyncFunction(fn)) {
+      if (!fn || !isFunction_1(fn) || !isKind_1(fn, 'AsyncFunction')) {
         error(("[getter]', 'The getter is not a function. name=" + name + " data=" + data));
       }
       debug('[getter]', name, data);
@@ -604,7 +603,7 @@ var riotx = (function (isAsyncFunction,riot) {
       };
 
       var fn = this._mutations[name];
-      if (!fn || !isFunction_1(fn) || !isAsyncFunction(fn)) {
+      if (!fn || !isFunction_1(fn) || !isKind_1(fn, 'AsyncFunction')) {
         error(("[mutation]', 'The mutation is not a function. name=" + name + " data=" + data));
       }
 
@@ -646,7 +645,7 @@ var riotx = (function (isAsyncFunction,riot) {
       };
 
       var fn = this._actions[name];
-      if (!fn || !isFunction_1(fn) || !isAsyncFunction(fn)) {
+      if (!fn || !isFunction_1(fn) || !isKind_1(fn, 'AsyncFunction')) {
         error(("[action] The action is not a function. name=" + name + " data=" + data));
       }
 
@@ -836,5 +835,5 @@ var riotx = (function (isAsyncFunction,riot) {
 
     return index;
 
-}(isAsyncFunction,riot));
+}(riot));
 //# sourceMappingURL=riotx.js.map
